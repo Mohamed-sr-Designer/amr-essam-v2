@@ -114,7 +114,7 @@
         <button class="proof" data-img="${esc(w.proof)}"><img src="${esc(w.proof)}" alt="Ads Manager screenshot" loading="lazy"><span>${T("receipt")}</span></button>
       </div>`;
     $("camp").querySelectorAll(".proof").forEach(b => b.onclick = () => lightbox(`<img src="${b.dataset.img}" alt="">`));
-    requestAnimationFrame(() => setTimeout(() => $("camp").querySelectorAll(".sbar i").forEach(i => i.style.width = i.dataset.w + "%"), 60));
+    requestAnimationFrame(() => setTimeout(() => $("camp").querySelectorAll(".sbar i").forEach(i => i.style.transform = `scaleX(${i.dataset.w / 100})`), 60));
   }
 
   function renderCases() {
@@ -164,7 +164,7 @@
   const contact = { name: "", phone: "", brand: "" };
 
   function setProgress() {
-    $("lfBar").style.width = (Math.min(step, TOTAL) / TOTAL * 100) + "%";
+    $("lfBar").style.transform = `scaleX(${Math.min(step, TOTAL) / TOTAL})`;
     $("lfCount").textContent = step >= TOTAL ? "✓" : `${step + 1} / ${TOTAL}`;
   }
   function swap(html, after) {

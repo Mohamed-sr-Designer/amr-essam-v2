@@ -73,7 +73,7 @@ textarea{resize:vertical;min-height:70px}
 /* funnel */
 .fn-row{display:grid;grid-template-columns:120px 1fr 90px;gap:12px;align-items:center;margin-bottom:10px;font-size:13px}
 .fn-bar{height:28px;background:var(--paper);border-radius:8px;overflow:hidden;position:relative}
-.fn-bar i{display:block;height:100%;background:var(--blue);border-radius:8px;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.fn-bar i{display:block;height:100%;background:var(--blue);border-radius:8px;}
 .fn-bar em{position:absolute;inset-inline-start:10px;top:50%;transform:translateY(-50%);font-style:normal;font-weight:600;font-size:12px;color:#fff;mix-blend-mode:difference}
 .fn-row .drop{font-size:12px;text-align:end;color:var(--mute)}
 .fn-row .drop.bad{color:var(--red);font-weight:600}

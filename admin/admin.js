@@ -121,7 +121,7 @@
     $("drawerIn").innerHTML = `
       <div class="d-top"><div><h3>${esc(l.name)}</h3><select class="st st-${esc(l.status)}" id="dSt">${STATUSES.map(s => `<option ${s === l.status ? "selected" : ""}>${s}</option>`).join("")}</select></div><button class="x" id="dX">×</button></div>
       <dl class="dl">${fields.map(([k, v]) => `<dt>${k}</dt><dd>${esc(v || "-")}</dd>`).join("")}</dl>
-      <a class="btn btn-blue full" style="background:#25D366" target="_blank" rel="noopener" href="https://wa.me/${esc(String(l.phone).replace(/\D/g, ""))}?text=${msg}">Reply on WhatsApp</a>
+      <a class="btn btn-blue full" style="background:#0F7A40" target="_blank" rel="noopener" href="https://wa.me/${esc(String(l.phone).replace(/\D/g, ""))}?text=${msg}">Reply on WhatsApp</a>
       <label class="fld" style="margin-top:18px"><span>Notes</span><textarea id="dNotes" rows="5" placeholder="Call notes, offer sent, follow-up date...">${esc(l.notes || "")}</textarea></label>
       <div class="row" style="justify-content:space-between"><button class="btn btn-red btn-sm" id="dDel">Delete lead</button><button class="btn btn-blue" id="dSave">Save notes</button></div>`;
     $("drawer").hidden = false;
