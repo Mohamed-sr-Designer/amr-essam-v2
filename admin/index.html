@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>AE Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://api.fontshare.com/v2/css?f[]=chillax@500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<!-- LOGIN -->
+<section class="login" id="login">
+  <form class="login-card" id="loginForm">
+    <div class="logo"><span class="logo-mark">AE</span><span>Dashboard</span></div>
+    <h1>Welcome back, Amr.</h1>
+    <p>Leads, numbers and every word on the site. All in one place.</p>
+    <label class="fld"><span>Password</span><input type="password" id="pw" autocomplete="current-password" required autofocus></label>
+    <p class="err" id="loginErr"></p>
+    <button class="btn btn-blue full" type="submit">Sign in</button>
+    <p class="mode-note" id="modeNote"></p>
+  </form>
+</section>
+
+<!-- APP -->
+<div class="app" id="app" hidden>
+  <aside class="side">
+    <div class="logo"><span class="logo-mark">AE</span><span>Dashboard</span></div>
+    <nav class="side-nav" id="sideNav">
+      <button data-v="overview" class="on"><i>◔</i>Overview</button>
+      <button data-v="leads"><i>☰</i>Leads <b id="newCount"></b></button>
+      <button data-v="content"><i>✎</i>Site content</button>
+      <button data-v="settings"><i>⚙</i>Settings</button>
+    </nav>
+    <div class="side-foot">
+      <span class="mode" id="modeBadge"></span>
+      <a href="../" target="_blank" rel="noopener" class="side-link">View site ↗</a>
+      <button class="side-link" id="logout">Sign out</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- OVERVIEW -->
+    <section class="view on" id="v-overview">
+      <header class="vh">
+        <div><h2>Overview</h2><p>How the site turns visitors into conversations.</p></div>
+        <div class="seg" id="range"><button data-d="7" class="on">7 days</button><button data-d="30">30 days</button><button data-d="0">All</button></div>
+      </header>
+      <div class="kpis" id="kpis"></div>
+      <div class="grid2">
+        <div class="card"><div class="card-h"><h3>Conversion funnel</h3><span class="muted">Where visitors drop off</span></div><div id="funnel"></div></div>
+        <div class="card"><div class="card-h"><h3>Leads per day</h3><span class="muted" id="lpdNote"></span></div><div id="lpd" class="chart"></div></div>
+      </div>
+      <div class="grid3">
+        <div class="card"><div class="card-h"><h3>By industry</h3></div><div id="bInd"></div></div>
+        <div class="card"><div class="card-h"><h3>By budget</h3></div><div id="bBud"></div></div>
+        <div class="card"><div class="card-h"><h3>By source</h3></div><div id="bSrc"></div></div>
+      </div>
+      <div class="card tips"><div class="card-h"><h3>CRO notes</h3><span class="muted">Auto-generated from your funnel</span></div><ul id="tips"></ul></div>
+    </section>
+
+    <!-- LEADS -->
+    <section class="view" id="v-leads">
+      <header class="vh">
+        <div><h2>Leads</h2><p>Every form submission, with status and notes.</p></div>
+        <div class="row"><input class="search" id="q" placeholder="Search name, phone, brand"><button class="btn btn-ghost" id="csv">Export CSV</button><button class="btn btn-ghost" id="refresh">↻</button></div>
+      </header>
+      <div class="chips" id="statusChips"></div>
+      <div class="card flush"><div class="tbl-wrap"><table class="tbl" id="leadTbl"></table></div><p class="empty" id="leadEmpty" hidden>No leads yet. They'll show up here the moment someone submits the form.</p></div>
+    </section>
+
+    <!-- CONTENT -->
+    <section class="view" id="v-content">
+      <header class="vh">
+        <div><h2>Site content</h2><p>Edit any text, number or case study. Changes go live when you save.</p></div>
+        <div class="row"><button class="btn btn-ghost" id="resetC">Reset to default</button><button class="btn btn-blue" id="saveC">Save changes</button></div>
+      </header>
+      <div class="tabs" id="cTabs"></div>
+      <div id="cBody"></div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="view" id="v-settings">
+      <header class="vh">
+        <div><h2>Settings</h2><p>WhatsApp, links, sections and access.</p></div>
+        <div class="row"><button class="btn btn-blue" id="saveS">Save settings</button></div>
+      </header>
+      <div id="sBody"></div>
+    </section>
+  </main>
+</div>
+
+<!-- lead drawer -->
+<div class="drawer" id="drawer" hidden><div class="drawer-in" id="drawerIn"></div></div>
+<div class="toast" id="toast"></div>
+
+<script src="../js/config.js"></script>
+<script src="../js/content.js"></script>
+<script src="../js/store.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
