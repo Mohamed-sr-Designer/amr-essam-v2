@@ -5,7 +5,7 @@
       "k.campaign": "Campaign highlight", "k.cases": "Case studies", "k.ind": "Industries", "k.method": "How I work", "k.reels": "On camera",
       "cases.title": "Results In Action", "cases.lede": "Ranked from the biggest number down. Brand names stay private, the receipts don't.",
       "ind.title": "Different Markets. Same Obsession.", "method.title": "The Loop That Never Stops.", "reels.title": "Straight Talk On Ads.", "reels.lede": "All playing on mute. Tap the speaker for sound or expand to watch it big.",
-      "lf.private": "Private. No spam.", "lf.fast": "Reply within 24h", "foot.role": "Senior Performance Marketer · Meta Ads · TikTok Ads",
+      "lf.private": "Private. No spam.", "lf.fast": "Reply within 24h", "foot.role": "Senior Performance Marketer · Meta · TikTok · Snapchat · Email · SMS",
       "wa.online": "Online now", "wa.chat": "Chat on WhatsApp",
       spent: "Amount spent", purchases: "Purchases", value: "Purchase value", roas: "ROAS", cpp: "Cost / purchase",
       totSpent: "Total spent, EGP", totValue: "Revenue, EGP", totRoas: "Avg ROAS",
@@ -17,7 +17,7 @@
       "cta.book": "Book a free call", "cta.review": "Grow with us",
       "mode.book": "Book a call", "mode.bookS": "1 click · 30 min", "mode.form": "Grow with us", "mode.formS": "5 quick questions",
       today: "Today", tomorrow: "Tomorrow", noSlots: "No free times left this day. Try another day.", yourDetails: "Your details", pickFirst: "Pick a time above, then confirm.",
-      confirm: "Confirm my call", booking: "Booking...", bookedT: "Your call is booked.", bookedP: "See you on WhatsApp,", addCal: "Add to Google Calendar", waConfirm: "Confirm on WhatsApp", min: "min"
+      confirm: "Confirm my call", booking: "Booking...", bookedT: "Your call is booked.", bookedP: "See you on WhatsApp,", addCal: "Add to Google Calendar", waConfirm: "Confirm on WhatsApp", min: "min", soon: "Coming soon"
     },
     ar: {
       "nav.results": "النتائج", "nav.cases": "دراسات حالة", "nav.reels": "الريلز",
@@ -37,7 +37,7 @@
       "cta.book": "احجز مكالمة مجانية", "cta.review": "اكبر معانا",
       "mode.book": "احجز مكالمة", "mode.bookS": "ضغطة واحدة · 30 دقيقة", "mode.form": "اكبر معانا", "mode.formS": "5 أسئلة سريعة",
       today: "النهارده", tomorrow: "بكرة", noSlots: "مفيش مواعيد فاضية اليوم ده. جرّب يوم تاني.", yourDetails: "بياناتك", pickFirst: "اختار معاد من فوق وبعدين أكّد.",
-      confirm: "أكّد المكالمة", booking: "بيتحجز...", bookedT: "مكالمتك اتحجزت.", bookedP: "عمرو هيكلمك على واتساب يوم", addCal: "ضيفها لـ Google Calendar", waConfirm: "أكّد على واتساب", min: "دقيقة"
+      confirm: "أكّد المكالمة", booking: "بيتحجز...", bookedT: "مكالمتك اتحجزت.", bookedP: "عمرو هيكلمك على واتساب يوم", addCal: "ضيفها لـ Google Calendar", waConfirm: "أكّد على واتساب", min: "دقيقة", soon: "قريبًا"
     }
   };
   const ICONS = {
@@ -398,9 +398,27 @@
     $("lfBar").style.transform = "scaleX(1)"; $("lfCount").textContent = "✓";
     return bookedSlot;
   }
+  const LOCK = () => C.settings.lockForms === true;
   function renderLead() {
+    const locked = LOCK();
+    const ml = $("mLink");
+    ml.hidden = !locked; $("lf").hidden = locked; $("modes").classList.toggle("locked-row", locked);
+    $("modes").querySelectorAll("button[data-m]").forEach(b => {
+      b.disabled = locked; b.classList.toggle("locked", locked);
+      const ico = b.querySelector(".m-ico"), em = b.querySelector("em");
+      ico.dataset.orig = ico.dataset.orig || ico.textContent;
+      ico.textContent = locked ? "🔒" : ico.dataset.orig;
+      if (locked) em.textContent = T("soon");
+    });
+    if (locked) {
+      ml.href = C.settings.linkUrl || "#";
+      $("mLinkT").textContent = L(C.settings.linkLabel); $("mLinkS").textContent = L(C.settings.linkSub);
+      ml.onclick = () => AEStore.track("link_click");
+      const lede = document.querySelector("#contact [data-c=\"form.lede\"]"); if (lede && C.settings.linkLede) lede.textContent = L(C.settings.linkLede);
+      $("modes").hidden = false; return;
+    }
     const on = M.enabled !== false;
-    $("modes").hidden = !on; if (!on) mode = "form";
+    $("modes").querySelector("[data-m=book]").hidden = !on; if (!on) mode = "form";
     $("modes").querySelectorAll("button").forEach(b => { b.classList.toggle("on", b.dataset.m === mode); b.setAttribute("aria-selected", b.dataset.m === mode); });
     $("lf").classList.toggle("is-book", mode === "book");
     if (mode === "book") renderBook(); else renderStep();
@@ -411,9 +429,15 @@
   document.addEventListener("click", e => {
     const a = e.target.closest("[data-goto]"); if (!a) return;
     e.preventDefault();
-    const m = a.dataset.goto === "book" && M.enabled === false ? "form" : a.dataset.goto;
-    setMode(m); AEStore.track("cta_" + m);
-    const target = $("modes").hidden ? $("lf") : $("modes");
+    let target;
+    if (LOCK()) {
+      AEStore.track("cta_link"); target = $("modes");
+      const ml = $("mLink"); ml.classList.remove("flash"); void ml.offsetWidth; setTimeout(() => ml.classList.add("flash"), 500);
+    } else {
+      const m = a.dataset.goto === "book" && M.enabled === false ? "form" : (a.dataset.goto === "link" ? mode : a.dataset.goto);
+      setMode(m); AEStore.track("cta_" + m);
+      target = $("modes");
+    }
     scrollTo({ top: target.getBoundingClientRect().top + scrollY - 110, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   });
 

@@ -8,7 +8,12 @@ window.AE_DEFAULT = {
     waDelay: 6,
     instagram: "https://www.instagram.com/_amr_essam_/",
     linkedin: "https://www.linkedin.com/in/amr-essam-472282201/",
-    sections: { clients: true, campaign: true, cases: true, industries: true, method: true, reels: true },
+    sections: { clients: false, campaign: true, cases: true, industries: true, method: true, reels: true },
+    lockForms: true,
+    linkUrl: "https://linktr.ee/amressam58",
+    linkLabel: { en: "Let's work together", ar: "يلا نشتغل سوا" },
+    linkLede: { en: "Everything you need to reach me, in one place.", ar: "كل طرق التواصل معايا في مكان واحد." },
+    linkSub: { en: "Tap to reach me · Linktree", ar: "دوس وتواصل معايا · Linktree" },
     meeting: {
       enabled: true,
       defaultMode: "book",

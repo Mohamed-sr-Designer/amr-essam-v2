@@ -287,6 +287,12 @@
         ${bi("settings.waPopup", "Popup bubble text", 1)}
         <div style="max-width:240px">${f("settings.waDelay", "Popup appears after (seconds)", "number")}</div>
       </div>
+      <div class="item"><div class="item-h"><b>Contact section</b></div>
+        <div class="row" style="margin-bottom:12px">${f("settings.lockForms", "Lock “Book a call” and “Grow with us” (show only the link button)", "check")}</div>
+        ${f("settings.linkUrl", "Link button URL (e.g. Linktree)")}
+        ${bi("settings.linkLabel", "Link button title")}${bi("settings.linkSub", "Link button small line")}${bi("settings.linkLede", "Intro line above the buttons while locked", 1)}
+        <p class="note">While locked, every CTA on the site scrolls to this link button. Untick to bring back call booking and the questions form. The WhatsApp button is not affected.</p>
+      </div>
       <div class="item"><div class="item-h"><b>Call booking</b></div>
         <div class="row" style="gap:18px;margin-bottom:12px">${f("settings.meeting.enabled", "Show “Book a call” option", "check")}</div>
         ${sel("settings.meeting.defaultMode", ["book", "form"]).replace("<span>defaultMode</span>", "<span>Open first (book = call booking, form = questions)</span>")}
