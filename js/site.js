@@ -14,7 +14,7 @@
       cName: "Almost done. Where should Amr reach you?", cHint: "Your details go to Amr only.", fName: "Your name", fPhone: "WhatsApp number", fBrand: "Brand or website (optional)",
       send: "Get my free ad review", sending: "Sending...", errReq: "Please add your name and a valid WhatsApp number.",
       thanksT: "You're in.", waNow: "Message Amr on WhatsApp now", vtag: "Amr Essam", vtag2: "Media buyer", reel: "Reel", watch: "Watch",
-      "cta.book": "Book a free call", "cta.review": "Get a free ad review",
+      "cta.book": "Book a free call", "cta.review": "Grow with us",
       "mode.book": "Book a call", "mode.bookS": "1 click · 30 min", "mode.form": "Grow with us", "mode.formS": "5 quick questions",
       today: "Today", tomorrow: "Tomorrow", noSlots: "No free times left this day. Try another day.", yourDetails: "Your details", pickFirst: "Pick a time above, then confirm.",
       confirm: "Confirm my call", booking: "Booking...", bookedT: "Your call is booked.", bookedP: "See you on WhatsApp,", addCal: "Add to Google Calendar", waConfirm: "Confirm on WhatsApp", min: "min"
@@ -34,7 +34,7 @@
       send: "عايز مراجعة مجانية لإعلاناتي", sending: "بيتبعت...", errReq: "من فضلك اكتب اسمك ورقم واتساب صحيح.",
       thanksT: "وصلنا طلبك.", waNow: "كلّم عمرو على واتساب دلوقتي", vtag: "عمرو عصام", vtag2: "ميديا باير", reel: "ريل", watch: "اتفرج",
       "foot.role": "Senior Performance Marketer · Meta · TikTok · Snapchat · إيميل · SMS",
-      "cta.book": "احجز مكالمة مجانية", "cta.review": "خد مراجعة مجانية لإعلاناتك",
+      "cta.book": "احجز مكالمة مجانية", "cta.review": "اكبر معانا",
       "mode.book": "احجز مكالمة", "mode.bookS": "ضغطة واحدة · 30 دقيقة", "mode.form": "اكبر معانا", "mode.formS": "5 أسئلة سريعة",
       today: "النهارده", tomorrow: "بكرة", noSlots: "مفيش مواعيد فاضية اليوم ده. جرّب يوم تاني.", yourDetails: "بياناتك", pickFirst: "اختار معاد من فوق وبعدين أكّد.",
       confirm: "أكّد المكالمة", booking: "بيتحجز...", bookedT: "مكالمتك اتحجزت.", bookedP: "عمرو هيكلمك على واتساب يوم", addCal: "ضيفها لـ Google Calendar", waConfirm: "أكّد على واتساب", min: "دقيقة"
