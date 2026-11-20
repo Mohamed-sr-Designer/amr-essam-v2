@@ -434,3 +434,5 @@ html[dir="rtl"] .m-arrow{transform:scaleX(-1)}
 .m-link.flash{animation:mflash 1.2s ease 2}
 @keyframes mflash{0%,100%{box-shadow:0 14px 30px -18px rgba(0,0,0,.45),0 0 0 0 rgba(32,80,163,.45)}50%{box-shadow:0 14px 30px -18px rgba(0,0,0,.45),0 0 0 10px rgba(32,80,163,0)}}
 @media (max-width:620px){.m-link{order:-1}}
+.modes .m-link em{color:#fff;opacity:.88;font-weight:500}
+.modes .m-link b{color:#fff}
