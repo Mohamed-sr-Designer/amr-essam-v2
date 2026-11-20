@@ -241,9 +241,9 @@
     const v = b.dataset.v;
     if (s.type === "multi") {
       const a = new Set(ans[s.key] || []);
-      if (v === "Not yet") a.clear();
-      else a.delete("Not yet");
-      a.has(v) ? a.delete(v) : a.add(v);
+      const ALL = "All of it", wasOn = a.has(v);
+      if (v === ALL) { a.clear(); if (!wasOn) a.add(ALL); }
+      else { a.delete(ALL); wasOn ? a.delete(v) : a.add(v); }
       ans[s.key] = [...a];
       b.parentElement.querySelectorAll(".opt").forEach(o => o.classList.toggle("sel", a.has(o.dataset.v)));
       const c = $("lfStage").querySelector(".cont"); if (c) { c.disabled = !a.size; c.style.opacity = a.size ? 1 : .4; }

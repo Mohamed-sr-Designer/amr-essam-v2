@@ -131,7 +131,7 @@ window.AE_DEFAULT = {
       { key: "industry", type: "choice", q: { en: "What do you sell?", ar: "بتبيع إيه؟" },
         options: [ { en: "E-commerce", ar: "تجارة إلكترونية" }, { en: "Real estate", ar: "عقارات" }, { en: "Clinic / healthcare", ar: "عيادة / رعاية صحية" }, { en: "Automotive", ar: "سيارات" }, { en: "Something else", ar: "حاجة تانية" } ] },
       { key: "platforms", type: "multi", q: { en: "Where do you advertise now?", ar: "بتعلن فين دلوقتي؟" },
-        options: [ { en: "Meta", ar: "Meta" }, { en: "TikTok", ar: "TikTok" }, { en: "Google", ar: "Google" }, { en: "Not yet", ar: "لسه مبدأتش" } ] },
+        options: [ { en: "Meta", ar: "Meta" }, { en: "TikTok", ar: "TikTok" }, { en: "Snapchat", ar: "Snapchat" }, { en: "All of it", ar: "كلهم" } ] },
       { key: "budget", type: "choice", q: { en: "Monthly ad budget?", ar: "ميزانيتك الإعلانية في الشهر؟" },
         options: [ { en: "Under 25K EGP", ar: "أقل من 25 ألف" }, { en: "25K to 75K EGP", ar: "من 25 لـ 75 ألف" }, { en: "75K to 200K EGP", ar: "من 75 لـ 200 ألف" }, { en: "200K+ EGP", ar: "أكتر من 200 ألف" } ] },
       { key: "goal", type: "choice", q: { en: "What matters most right now?", ar: "إيه أهم حاجة دلوقتي؟" },
