@@ -4,7 +4,7 @@
       "nav.results": "Results", "nav.cases": "Case studies", "nav.reels": "Reels",
       "k.campaign": "Campaign highlight", "k.cases": "Case studies", "k.ind": "Industries", "k.method": "How I work", "k.reels": "On camera",
       "cases.title": "Results In Action", "cases.lede": "Ranked from the biggest number down. Brand names stay private, the receipts don't.",
-      "ind.title": "Different Markets. Same Obsession.", "method.title": "The Loop That Never Stops.", "reels.title": "Straight Talk On Ads.",
+      "ind.title": "Different Markets. Same Obsession.", "method.title": "The Loop That Never Stops.", "reels.title": "Straight Talk On Ads.", "reels.lede": "All playing on mute. Tap the speaker for sound or expand to watch it big.",
       "lf.private": "Private. No spam.", "lf.fast": "Reply within 24h", "foot.role": "Senior Performance Marketer · Meta Ads · TikTok Ads",
       "wa.online": "Online now", "wa.chat": "Chat on WhatsApp",
       spent: "Amount spent", purchases: "Purchases", value: "Purchase value", roas: "ROAS", cpp: "Cost / purchase",
@@ -23,7 +23,7 @@
       "nav.results": "النتائج", "nav.cases": "دراسات حالة", "nav.reels": "الريلز",
       "k.campaign": "حملة مميزة", "k.cases": "دراسات حالة", "k.ind": "المجالات", "k.method": "طريقة الشغل", "k.reels": "قدام الكاميرا",
       "cases.title": "النتائج على أرض الواقع", "cases.lede": "مرتبة من الرقم الأكبر للأصغر. أسماء البراندات سرية، الإثباتات لأ.",
-      "ind.title": "أسواق مختلفة. نفس الهوس.", "method.title": "الدايرة اللي مبتقفش.", "reels.title": "كلام صريح عن الإعلانات.",
+      "ind.title": "أسواق مختلفة. نفس الهوس.", "method.title": "الدايرة اللي مبتقفش.", "reels.title": "كلام صريح عن الإعلانات.", "reels.lede": "كلهم شغالين من غير صوت. دوس على السماعة للصوت أو كبّر عشان تتفرج.",
       "lf.private": "بياناتك سرية", "lf.fast": "رد خلال 24 ساعة", "foot.role": "Senior Performance Marketer · Meta Ads · TikTok Ads",
       "wa.online": "متاح دلوقتي", "wa.chat": "كلمني على واتساب",
       spent: "المصروف", purchases: "المشتريات", value: "قيمة المشتريات", roas: "ROAS", cpp: "تكلفة الشراء",
@@ -83,7 +83,7 @@
     // mobile: video sits after the first "mw" (two-per-row) pair
     let lastMw = -1; s.forEach((x, i) => { if (x.mw) lastMw = i; });
     const vidOrder = (lastMw > -1 ? lastMw : Math.min(2, n - 1)) * 2 + 1;
-    const tile = (x, i) => `<div class="tile t-${esc(x.color)} ${i >= wideFrom ? "wide" : ""} ${x.mw ? "mw" : ""}" style="--o:${i * 2}"><div class="tx"><h3>${esc(L(x.title))}</h3><p>${esc(L(x.desc))}</p></div><span class="ico">${ICONS[x.icon] || ICONS.track}</span></div>`;
+    const tile = (x, i) => `<div class="tile t-${esc(x.color)} ${i >= wideFrom ? "wide" : ""} ${x.mw ? "mw" : ""}" style="--o:${i * 2}" data-goto="form" role="button" tabindex="0"><div class="tx"><h3>${esc(L(x.title))}</h3><p>${esc(L(x.desc))}</p></div><span class="ico">${ICONS[x.icon] || ICONS.track}</span></div>`;
     const vid = `<div class="tile vid" style="--o:${vidOrder}"><video src="assets/hero.mp4" poster="assets/reels/r03.jpg" autoplay muted loop playsinline></video><div class="vtag"><span><b>${T("vtag")}</b><br>${T("vtag2")}</span><span class="pulse"></span></div></div>`;
     const parts = s.map(tile);
     parts.splice(Math.min(2, parts.length), 0, vid);
@@ -164,23 +164,51 @@
     $("stepList").innerHTML = C.method.map(x => `<li class="rv"><h3>${esc(L(x.t))}</h3><p>${esc(L(x.p))}</p></li>`).join("");
   }
 
+  /* -------- reels gallery: all play muted, per-card sound + expand -------- */
+  const IC = {
+    mute: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="m23 9-6 6M17 9l6 6"/></svg>',
+    sound: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>',
+    expand: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>',
+    shrink: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7"/></svg>'
+  };
+  let reelIO;
   function renderReels() {
     const list = C.reels.filter(r => r.visible !== false);
-    $("reelList").innerHTML = list.map((r, i) => `<div class="reel" data-id="${esc(r.id)}" role="button" tabindex="0"><img src="assets/reels/${esc(r.id)}.jpg" alt="" loading="lazy"><div class="rp"><span>${esc(L(r.title) || T("reel") + " " + String(i + 1).padStart(2, "0"))}</span><i>▶</i></div></div>`).join("");
-    $("reelList").querySelectorAll(".reel").forEach(el => {
-      let v;
-      el.onmouseenter = () => {
-        if (matchMedia("(hover:none)").matches) return;
-        if (!v) { v = document.createElement("video"); Object.assign(v, { src: `assets/reels/${el.dataset.id}.mp4`, muted: true, loop: true, playsInline: true }); el.prepend(v); }
-        v.play().then(() => el.classList.add("playing")).catch(() => {});
+    $("reelList").innerHTML = list.map((r, i) => `
+      <div class="gv" data-id="${esc(r.id)}">
+        <video src="assets/reels/${esc(r.id)}.mp4" poster="assets/reels/${esc(r.id)}.jpg" muted loop playsinline preload="metadata"></video>
+        <div class="gv-bar">
+          <span class="gv-t">${esc(L(r.title) || T("reel") + " " + String(i + 1).padStart(2, "0"))}</span>
+          <button class="gv-b snd" aria-label="Sound">${IC.mute}</button>
+          <button class="gv-b exp" aria-label="Expand">${IC.expand}</button>
+        </div>
+      </div>`).join("");
+    const cards = [...$("reelList").querySelectorAll(".gv")];
+    reelIO && reelIO.disconnect();
+    reelIO = new IntersectionObserver(es => es.forEach(en => { const v = en.target.querySelector("video"); if (en.isIntersecting) v.play().catch(() => {}); else if (!en.target.classList.contains("on")) v.pause(); }), { threshold: .25 });
+    cards.forEach(el => {
+      const v = el.querySelector("video"), snd = el.querySelector(".snd");
+      reelIO.observe(el);
+      snd.onclick = e => {
+        e.stopPropagation();
+        const turnOn = v.muted;
+        cards.forEach(c => { const cv = c.querySelector("video"); cv.muted = true; c.classList.remove("on"); c.querySelector(".snd").innerHTML = IC.mute; });
+        if (turnOn) { v.muted = false; v.play().catch(() => {}); el.classList.add("on"); snd.innerHTML = IC.sound; AEStore.track("reel_sound"); }
       };
-      el.onmouseleave = () => { if (v) { v.pause(); el.classList.remove("playing"); } };
-      const open = () => { lightbox(`<video src="assets/reels/${el.dataset.id}.mp4" controls autoplay playsinline></video>`); AEStore.track("reel_play"); };
-      el.onclick = open; el.onkeydown = e => { if (e.key === "Enter") open(); };
+      const big = e => { e && e.stopPropagation(); openReel(el); };
+      el.querySelector(".exp").onclick = big;
+      v.onclick = big;
     });
   }
-  const scrollR = d => { const r = $("reelList"); const w = r.querySelector(".reel")?.offsetWidth || 240; r.scrollBy({ left: d * (w + 14) * 2 * (lang === "ar" ? -1 : 1), behavior: "smooth" }); };
-  $("rn").onclick = () => scrollR(1); $("rp").onclick = () => scrollR(-1);
+  function openReel(card) {
+    const v = card.querySelector("video");
+    $("reelList").querySelectorAll("video").forEach(x => { x.muted = true; });
+    $("reelList").querySelectorAll(".gv").forEach(c => { c.classList.remove("on"); c.querySelector(".snd").innerHTML = IC.mute; });
+    lightbox(`<div class="theater"><video id="thV" src="${v.currentSrc || v.src}" controls autoplay playsinline></video><button class="th-min" id="thMin" aria-label="Shrink">${IC.shrink}</button></div>`, "reel");
+    const tv = $("thV"); tv.currentTime = v.currentTime || 0; tv.muted = false; tv.play().catch(() => { tv.muted = true; tv.play(); });
+    $("thMin").onclick = () => { v.currentTime = tv.currentTime; closeLb(); };
+    AEStore.track("reel_play");
+  }
 
   /* -------- lead form -------- */
   const S = C.form.steps;
@@ -379,7 +407,15 @@
   }
   function setMode(m) { if (m === mode && $("lfStage").firstElementChild) return; mode = m; $("lfStage").innerHTML = ""; AEStore.track("mode_" + m); renderLead(); }
   $("modes").querySelectorAll("button").forEach(b => b.onclick = () => setMode(b.dataset.m));
-  document.querySelectorAll("[data-goto]").forEach(a => a.addEventListener("click", () => setMode(a.dataset.goto)));
+  /* any [data-goto] (hero buttons, service tiles) opens that tab and scrolls to the form */
+  document.addEventListener("click", e => {
+    const a = e.target.closest("[data-goto]"); if (!a) return;
+    e.preventDefault();
+    const m = a.dataset.goto === "book" && M.enabled === false ? "form" : a.dataset.goto;
+    setMode(m); AEStore.track("cta_" + m);
+    const target = $("modes").hidden ? $("lf") : $("modes");
+    scrollTo({ top: target.getBoundingClientRect().top + scrollY - 110, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  });
 
   document.addEventListener("keydown", e => {
     if (mode !== "form" || step >= S.length || e.target.matches("input,textarea") || e.metaKey || e.ctrlKey) return;
@@ -404,8 +440,8 @@
 
   /* -------- misc -------- */
   const lb = $("lb");
-  function lightbox(h) { $("lbIn").innerHTML = h; lb.hidden = false; document.body.style.overflow = "hidden"; }
-  const closeLb = () => { lb.hidden = true; $("lbIn").innerHTML = ""; document.body.style.overflow = ""; };
+  function lightbox(h, kind) { $("lbIn").innerHTML = h; lb.className = "lb" + (kind ? " lb-" + kind : ""); lb.hidden = false; document.body.style.overflow = "hidden"; }
+  const closeLb = () => { const tv = $("thV"); if (tv) tv.pause(); lb.hidden = true; $("lbIn").innerHTML = ""; document.body.style.overflow = ""; };
   $("lbX").onclick = closeLb; lb.onclick = e => { if (e.target === lb) closeLb(); };
   addEventListener("keydown", e => { if (e.key === "Escape" && !lb.hidden) closeLb(); });
 
@@ -420,4 +456,5 @@
 
   try { if (!sessionStorage.getItem("ae2-v")) { sessionStorage.setItem("ae2-v", "1"); AEStore.track("visit"); } } catch (e) { AEStore.track("visit"); }
   renderAll();
+  window.__aeLoaded && window.__aeLoaded();
 })();

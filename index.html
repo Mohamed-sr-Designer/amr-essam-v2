@@ -17,6 +17,34 @@
 </head>
 <body>
 
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="ld-in">
+    <div class="ld-mark"><span>AE</span><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46"/></svg></div>
+    <div class="ld-name">amr essam</div>
+    <div class="ld-role">Senior Performance Marketer</div>
+    <div class="ld-bar"><i id="ldBar"></i></div>
+    <div class="ld-num"><span id="ldNum">0</span>%</div>
+  </div>
+</div>
+<script>
+(function () {
+  var el = document.getElementById("loader"), bar = document.getElementById("ldBar"), num = document.getElementById("ldNum");
+  var p = 0, done = false, ready = false, winLoaded = false, t0 = Date.now();
+  document.documentElement.classList.add("is-loading");
+  function set(v) { bar.style.transform = "scaleX(" + v / 100 + ")"; num.textContent = Math.round(v); }
+  function finish() {
+    if (done) return; done = true;
+    var wait = Math.max(0, 900 - (Date.now() - t0));
+    setTimeout(function () { set(100); setTimeout(function () { el.classList.add("out"); document.documentElement.classList.remove("is-loading"); setTimeout(function () { el.remove(); }, 700); }, 250); }, wait);
+  }
+  (function tick() { if (done) return; p += (92 - p) * 0.06; set(p); setTimeout(tick, 40); })();
+  function check() { if (ready && winLoaded) finish(); }
+  window.__aeLoaded = function () { ready = true; check(); };
+  window.addEventListener("load", function () { winLoaded = true; check(); });
+  setTimeout(finish, 3500);
+})();
+</script>
+
 <header class="nav-wrap">
   <nav class="nav">
     <a href="#top" class="logo" aria-label="Amr Essam"><span class="logo-mark">AE</span><span class="logo-txt">amr essam</span></a>
@@ -83,14 +111,10 @@
   </section>
 
   <section class="sec wrap" id="reels" data-sec="reels">
-    <div class="reels-head">
-      <div>
-        <p class="kicker left" data-t="k.reels">On camera</p>
-        <h2 class="h2 left" data-t="reels.title">Straight Talk On Ads.</h2>
-      </div>
-      <div class="arrows"><button id="rp" aria-label="Previous">←</button><button id="rn" aria-label="Next">→</button></div>
-    </div>
-    <div class="reels" id="reelList"></div>
+    <p class="kicker" data-t="k.reels">On camera</p>
+    <h2 class="h2" data-t="reels.title">Straight Talk On Ads.</h2>
+    <p class="lede center" data-t="reels.lede">All playing on mute. Tap the speaker for sound or expand to watch it big.</p>
+    <div class="gallery" id="reelList"></div>
   </section>
 
   <section class="sec wrap" id="contact">
