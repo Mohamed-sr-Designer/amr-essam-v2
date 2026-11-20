@@ -8,10 +8,31 @@ window.AE_DEFAULT = {
     waDelay: 6,
     instagram: "https://www.instagram.com/_amr_essam_/",
     linkedin: "https://www.linkedin.com/in/amr-essam-472282201/",
-    sections: { campaign: true, cases: true, services: true, industries: true, method: true, reels: true }
+    sections: { clients: true, campaign: true, cases: true, industries: true, method: true, reels: true },
+    meeting: {
+      enabled: true,
+      defaultMode: "book",
+      duration: 30,
+      workDays: [6, 0, 1, 2, 3, 4],
+      start: "11:00",
+      end: "20:00",
+      daysAhead: 7,
+      noticeHours: 2,
+      bookingUrl: "",
+      title: { en: "Book a free 30-minute call", ar: "احجز مكالمة مجانية 30 دقيقة" },
+      hint: { en: "Pick a time that works. Cairo time.", ar: "اختار المعاد اللي يناسبك. بتوقيت القاهرة." }
+    }
+  },
+  clients: {
+    title: { en: "Brands I've Scaled", ar: "براندات اشتغلت معاها" },
+    speed: 30,
+    items: [
+      { name: "Brand 01", logo: "" }, { name: "Brand 02", logo: "" }, { name: "Brand 03", logo: "" }, { name: "Brand 04", logo: "" },
+      { name: "Brand 05", logo: "" }, { name: "Brand 06", logo: "" }, { name: "Brand 07", logo: "" }, { name: "Brand 08", logo: "" }
+    ]
   },
   hero: {
-    badge: { en: "Senior Performance Marketer · Meta & TikTok Ads", ar: "Senior Performance Marketer · إعلانات Meta وTikTok" },
+    badge: { en: "Senior Performance Marketer · Paid social, Email & SMS", ar: "Senior Performance Marketer · إعلانات، إيميل وSMS" },
     title: { en: "I Help Brands Turn Ad Spend Into Revenue.", ar: "بساعد البراندات تحوّل الصرف الإعلاني لمبيعات." },
     sub1: { en: "I'm Amr Essam, a media buyer focused on one thing: measurable results from every pound you put into Meta and TikTok.", ar: "أنا عمرو عصام، ميديا باير مركّز على حاجة واحدة: نتيجة تتقاس من كل جنيه بتحطه في Meta وTikTok." },
     sub2: { en: "Data-driven structure, sharp audience targeting, relentless creative testing and daily optimization. Likes are nice. Purchases pay.", ar: "هيكلة مبنية على الداتا، استهداف دقيق، اختبار كريتيف مستمر وتحسين يومي. اللايكات حلوة، بس المبيعات هي اللي بتدفع." },
@@ -20,9 +41,12 @@ window.AE_DEFAULT = {
   services: [
     { color: "blue", icon: "meta", title: { en: "Meta Ads", ar: "إعلانات Meta" }, desc: { en: "Facebook + Instagram, built for purchases", ar: "فيسبوك وإنستجرام، مبنية على المبيعات" } },
     { color: "gray", icon: "tiktok", title: { en: "TikTok Ads", ar: "إعلانات TikTok" }, desc: { en: "Native creative, spark ads, fast hooks", ar: "كريتيف نيتيف، Spark Ads وهوكس سريعة" } },
-    { color: "mint", icon: "target", title: { en: "Audience targeting", ar: "استهداف الجمهور" }, desc: { en: "Lookalikes, stacks, retargeting windows", ar: "Lookalikes وريتارجتنج متفصل على الفانل" } },
-    { color: "orange", icon: "test", title: { en: "Creative testing", ar: "اختبار الكريتيف" }, desc: { en: "Structured rounds, kill rules, scale winners", ar: "جولات منظمة، قواعد إيقاف، وسكيل للكسبان" } },
-    { color: "yellow", icon: "track", title: { en: "Tracking & optimization", ar: "التراكينج والتحسين" }, desc: { en: "Pixel, CAPI and daily budget moves", ar: "Pixel وCAPI ونقل ميزانية يومي" } }
+    { color: "yellow", icon: "snap", title: { en: "Snapchat Ads", ar: "إعلانات Snapchat" }, desc: { en: "Story ads and lenses for Gen Z buyers", ar: "ستوري آدز وعدسات لجمهور Gen Z" } },
+    { color: "mint", icon: "email", mw: true, title: { en: "Email Marketing", ar: "الإيميل ماركتنج" }, desc: { en: "Flows, abandoned carts, win-back campaigns", ar: "فلوز، سلات متروكة، وحملات استرجاع العملاء" } },
+    { color: "orange", icon: "sms", mw: true, title: { en: "SMS Campaigns", ar: "حملات SMS" }, desc: { en: "Offers and reminders that land in seconds", ar: "عروض وتذكيرات بتوصل في ثواني" } },
+    { color: "lilac", icon: "target", title: { en: "Audience targeting", ar: "استهداف الجمهور" }, desc: { en: "Lookalikes, stacks, retargeting windows", ar: "Lookalikes وريتارجتنج متفصل على الفانل" } },
+    { color: "pink", icon: "test", title: { en: "Creative testing", ar: "اختبار الكريتيف" }, desc: { en: "Structured rounds, kill rules, scale winners", ar: "جولات منظمة، قواعد إيقاف، وسكيل للكسبان" } },
+    { color: "blue", icon: "track", title: { en: "Tracking & optimization", ar: "التراكينج والتحسين" }, desc: { en: "Pixel, CAPI and daily budget moves", ar: "Pixel وCAPI ونقل ميزانية يومي" } }
   ],
   stats: [
     { value: "2.21M", label: { en: "EGP revenue from one campaign", ar: "جنيه مبيعات من حملة واحدة" } },

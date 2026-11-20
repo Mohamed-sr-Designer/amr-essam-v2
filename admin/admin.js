@@ -57,8 +57,9 @@
     const won = leads.filter(l => l.status === "Won").length, qual = leads.filter(l => ["Qualified", "Won"].includes(l.status)).length;
     $("kpis").innerHTML = [
       ["Visits", num(visits)], ["Form starts", num(starts)], ["Leads", num(leads.length), "hl"],
-      ["Visit → lead", pct(subs, visits) + "%", "y"], ["WhatsApp clicks", num(wa)], ["Qualified / won", qual + " / " + won]
+      ["Calls booked", num(leads.filter(l => l.type === "meeting").length)], ["Visit → lead", pct(subs, visits) + "%", "y"], ["WhatsApp clicks", num(wa)]
     ].map(([k, v, c]) => `<div class="kpi ${c || ""}"><span>${k}</span><b>${v}</b></div>`).join("");
+    renderUpcoming();
 
     const steps = (CONTENT.form.steps || []).map((s, i) => [`Q${i + 1}: ${s.q.en}`, evSum("step_" + (i + 1))]);
     const fun = [["Visited", visits], ["Started form", starts], ...steps, ["Submitted", subs]];
@@ -89,20 +90,38 @@
     $("newCount").textContent = newL || "";
   }
 
+  /* ---------- meetings ---------- */
+  const WDN = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  function meetLabel(k) {
+    if (!k) return "";
+    const [ds, ts] = k.split(" "); const [y, m, d] = ds.split("-").map(Number); let [h, mi] = ts.split(":").map(Number);
+    const pm = h >= 12; const h12 = h % 12 || 12;
+    return `${WDN[new Date(Date.UTC(y, m - 1, d)).getUTCDay()]} ${d} ${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][m - 1]} · ${h12}:${String(mi).padStart(2, "0")} ${pm ? "PM" : "AM"}`;
+  }
+  function renderUpcoming() {
+    let card = $("upcoming");
+    if (!card) { card = document.createElement("div"); card.className = "card"; card.id = "upcoming"; card.style.marginTop = "16px"; document.querySelector("#v-overview .tips").before(card); }
+    const nowKey = new Date().toLocaleString("sv-SE", { timeZone: "Africa/Cairo" }).slice(0, 16);
+    const up = LEADS.filter(l => l.meeting && l.meeting >= nowKey && l.status !== "Lost").sort((a, b) => a.meeting.localeCompare(b.meeting));
+    card.innerHTML = `<div class="card-h"><h3>Upcoming calls</h3><span class="muted">Cairo time · ${up.length} booked</span></div>` +
+      (up.length ? `<div class="up-list">${up.slice(0, 8).map(l => `<div class="up"><b>${meetLabel(l.meeting)}</b><span>${esc(l.name)}</span><a class="wa-l" target="_blank" rel="noopener" href="https://wa.me/${esc(String(l.phone).replace(/\D/g, ""))}">💬 ${esc(l.phone)}</a></div>`).join("")}</div>` : `<p class="muted">No calls booked yet. Visitors book from the "Book a call" tab on the site.</p>`);
+  }
+
   /* ---------- leads ---------- */
   $("q").oninput = renderLeads;
   $("refresh").onclick = async () => { LEADS = await AEStore.leads(PW); EVENTS = await AEStore.events(PW); renderLeads(); renderOverview(); toast("Updated"); };
   function renderLeads() {
-    const counts = { All: LEADS.length }; STATUSES.forEach(s => counts[s] = LEADS.filter(l => l.status === s).length);
-    $("statusChips").innerHTML = ["All", ...STATUSES].map(s => `<button class="${s === statusF ? "on" : ""}" data-s="${s}">${s}<span>${counts[s]}</span></button>`).join("");
+    const counts = { All: LEADS.length, Calls: LEADS.filter(l => l.type === "meeting").length }; STATUSES.forEach(s => counts[s] = LEADS.filter(l => l.status === s).length);
+    $("statusChips").innerHTML = ["All", "Calls", ...STATUSES].map(s => `<button class="${s === statusF ? "on" : ""}" data-s="${s}">${s === "Calls" ? "📅 Calls" : s}<span>${counts[s]}</span></button>`).join("");
     $("statusChips").querySelectorAll("button").forEach(b => b.onclick = () => { statusF = b.dataset.s; renderLeads(); });
     const q = $("q").value.trim().toLowerCase();
-    const rows = LEADS.filter(l => (statusF === "All" || l.status === statusF) && (!q || [l.name, l.phone, l.brand].join(" ").toLowerCase().includes(q)));
+    const rows = LEADS.filter(l => (statusF === "All" || (statusF === "Calls" ? l.type === "meeting" : l.status === statusF)) && (!q || [l.name, l.phone, l.brand].join(" ").toLowerCase().includes(q)));
     $("leadEmpty").hidden = !!rows.length;
-    $("leadTbl").innerHTML = rows.length ? `<thead><tr><th>Date</th><th>Name</th><th>WhatsApp</th><th>Industry</th><th>Budget</th><th>Goal</th><th>Platforms</th><th>Status</th></tr></thead><tbody>${rows.map(l => `
+    $("leadTbl").innerHTML = rows.length ? `<thead><tr><th>Date</th><th>Name</th><th>Type</th><th>WhatsApp</th><th>Industry</th><th>Budget</th><th>Goal</th><th>Platforms</th><th>Status</th></tr></thead><tbody>${rows.map(l => `
       <tr data-id="${esc(l.id)}">
         <td>${new Date(l.created).toLocaleString("en-GB", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" })}</td>
         <td class="nm"><b>${esc(l.name)}</b><span>${esc(l.brand || "")}</span></td>
+        <td>${l.type === "meeting" ? `<span class="tag-call">📅 ${esc(meetLabel(l.meeting))}</span>` : `<span class="tag-form">📝 Form</span>`}</td>
         <td><a class="wa-l" href="https://wa.me/${esc(String(l.phone).replace(/\D/g, ""))}" target="_blank" rel="noopener" onclick="event.stopPropagation()">💬 ${esc(l.phone)}</a></td>
         <td>${esc(l.industry)}</td><td>${esc(l.budget)}</td><td>${esc(l.goal)}</td><td>${esc(l.platforms)}</td>
         <td><select class="st st-${esc(l.status)}" data-id="${esc(l.id)}" onclick="event.stopPropagation()">${STATUSES.map(s => `<option ${s === l.status ? "selected" : ""}>${s}</option>`).join("")}</select></td>
@@ -116,7 +135,7 @@
   }
   function openLead(id) {
     const l = LEADS.find(x => x.id === id); if (!l) return;
-    const fields = [["Phone", l.phone], ["Brand", l.brand], ["Industry", l.industry], ["Platforms", l.platforms], ["Budget", l.budget], ["Goal", l.goal], ["Language", l.lang], ["Source", l.source], ["Campaign", l.campaign], ["Received", new Date(l.created).toLocaleString("en-GB")]];
+    const fields = [["Type", l.type === "meeting" ? "Call booking" : "Form"], ["Call time", l.meeting ? meetLabel(l.meeting) + " (Cairo)" : ""], ["Phone", l.phone], ["Brand", l.brand], ["Industry", l.industry], ["Platforms", l.platforms], ["Budget", l.budget], ["Goal", l.goal], ["Language", l.lang], ["Source", l.source], ["Campaign", l.campaign], ["Received", new Date(l.created).toLocaleString("en-GB")]];
     const msg = encodeURIComponent(`Hi ${l.name}, this is Amr Essam. Thanks for reaching out about your ads. When's a good time for a quick call?`);
     $("drawerIn").innerHTML = `
       <div class="d-top"><div><h3>${esc(l.name)}</h3><select class="st st-${esc(l.status)}" id="dSt">${STATUSES.map(s => `<option ${s === l.status ? "selected" : ""}>${s}</option>`).join("")}</select></div><button class="x" id="dX">×</button></div>
@@ -132,7 +151,7 @@
   }
   $("drawer").onclick = e => { if (e.target.id === "drawer") $("drawer").hidden = true; };
   $("csv").onclick = () => {
-    const cols = ["created", "name", "phone", "brand", "industry", "platforms", "budget", "goal", "status", "notes", "source", "campaign", "lang"];
+    const cols = ["created", "type", "meeting", "name", "phone", "brand", "industry", "platforms", "budget", "goal", "status", "notes", "source", "campaign", "lang"];
     const csv = [cols.join(","), ...LEADS.map(l => cols.map(c => `"${String(l[c] ?? "").replace(/"/g, '""')}"`).join(","))].join("\n");
     const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob(["﻿" + csv], { type: "text/csv" })); a.download = `amr-leads-${new Date().toISOString().slice(0, 10)}.csv`; a.click();
   };
@@ -143,7 +162,7 @@
   const f = (p, label, type = "text", extra = "") => {
     const v = getP(D, p);
     if (type === "textarea") return `<label class="fld"><span>${label}</span><textarea data-p="${p}" ${extra}>${esc(v)}</textarea></label>`;
-    if (type === "check") return `<label class="tog"><input type="checkbox" data-p="${p}" ${v !== false ? "checked" : ""}> ${label}</label>`;
+    if (type === "check") return `<label class="tog"><input type="checkbox" data-p="${p}" ${(v === true || (v === undefined && !p.endsWith(".mw"))) ? "checked" : ""}> ${label}</label>`;
     return `<label class="fld"><span>${label}</span><input type="${type}" data-p="${p}" value="${esc(v)}" ${type === "number" ? 'step="any"' : ""} ${extra}></label>`;
   };
   const bi = (p, label, ta) => `<div><span class="lbl">${label}</span><div class="bi">${f(p + ".en", "English", ta ? "textarea" : "text")}${f(p + ".ar", "العربية", ta ? "textarea" : "text", 'dir="rtl"')}</div></div>`;
@@ -158,18 +177,19 @@
     "campaign.windows": () => ({ name: { en: "New window", ar: "" }, proof: "", total: { spend: 0, purchases: 0, value: 0, roas: 0, cpp: 0 }, rows: [] }),
     rows: () => ({ spend: 0, purchases: 0, value: 0, roas: 0, cpp: 0 }),
     "form.steps": () => ({ key: "q" + Date.now().toString(36), type: "choice", q: { en: "New question", ar: "" }, options: [{ en: "Option", ar: "" }] }),
-    options: () => ({ en: "", ar: "" })
+    options: () => ({ en: "", ar: "" }),
+    "clients.items": () => ({ name: "Brand", logo: "" })
   };
   const blankFor = p => (BLANK[p] || BLANK[p.split(".").pop()] || (() => ({})))();
 
   /* ---------- content ---------- */
-  const CT = [["hero", "Hero"], ["stats", "Big numbers"], ["campaign", "Campaign highlight"], ["cases", "Case studies"], ["services", "Services"], ["industries", "Industries & method"], ["reels", "Reels"], ["form", "Lead form"], ["json", "Advanced (JSON)"]];
+  const CT = [["hero", "Hero"], ["stats", "Big numbers"], ["clients", "Client logos"], ["campaign", "Campaign highlight"], ["cases", "Case studies"], ["services", "Services"], ["industries", "Industries & method"], ["reels", "Reels"], ["form", "Lead form"], ["json", "Advanced (JSON)"]];
   let ctab = "hero", dirty = false;
   function markDirty() { dirty = true; }
   function renderContent() {
     $("cTabs").innerHTML = CT.map(([k, n]) => `<button class="${k === ctab ? "on" : ""}" data-k="${k}">${n}</button>`).join("");
     $("cTabs").querySelectorAll("button").forEach(b => b.onclick = () => { ctab = b.dataset.k; renderContent(); });
-    const body = { hero: edHero, stats: edStats, campaign: edCampaign, cases: edCases, services: edServices, industries: edInd, reels: edReels, form: edForm, json: edJson }[ctab]();
+    const body = { hero: edHero, stats: edStats, clients: edClients, campaign: edCampaign, cases: edCases, services: edServices, industries: edInd, reels: edReels, form: edForm, json: edJson }[ctab]();
     $("cBody").innerHTML = `<div class="ed">${body}</div>`;
     bind($("cBody"), renderContent);
   }
@@ -224,9 +244,13 @@
         ${(c.stats || []).map((s, j) => `<div class="g3">${f(`cases.${i}.stats.${j}.v`, "Value")}${f(`cases.${i}.stats.${j}.l.en`, "Label EN")}${f(`cases.${i}.stats.${j}.l.ar`, "Label AR", "text", 'dir="rtl"')}</div>`).join("")}
         ${proofPicker(`cases.${i}.img`)}`, D.cases.length)).join("") + addBtn("cases", "Add case study");
   }
-  const ICONS = ["meta", "tiktok", "target", "test", "track"], COLS = ["blue", "gray", "mint", "orange", "yellow", "lilac"];
+  const ICONS = ["meta", "tiktok", "snap", "email", "sms", "target", "test", "track"], COLS = ["blue", "gray", "mint", "orange", "yellow", "lilac", "pink"];
+  const edClients = () => `<div class="item">${bi("clients.title", "Section title")}<div style="max-width:260px">${f("clients.speed", "Scroll speed (seconds per logo set, lower = faster)", "number")}</div></div>
+    <p class="note">The strip loops by itself. Upload logo files (PNG or SVG, transparent background) to assets/logos in the repo and type the path, e.g. <b>assets/logos/brand.png</b>, or paste a full image URL. Empty logo = a placeholder with the name.</p>` +
+    (D.clients.items || []).map((x, i) => itemShell("clients.items", i, esc(x.name || "Logo"), `<div class="bi">${f(`clients.items.${i}.name`, "Brand name")}${f(`clients.items.${i}.logo`, "Logo path or URL")}</div>${x.logo ? `<img src="${/^https?:/.test(x.logo) ? esc(x.logo) : "../" + esc(x.logo)}" style="max-height:50px;margin-top:8px" alt="">` : ""}`, D.clients.items.length)).join("") + addBtn("clients.items", "Add logo");
+  BLANK.services = () => ({ color: "blue", icon: "target", mw: false, title: { en: "", ar: "" }, desc: { en: "", ar: "" } });
   const sel = (p, opts) => `<label class="fld"><span>${p.split(".").pop()}</span><select data-p="${p}">${opts.map(o => `<option ${getP(D, p) === o ? "selected" : ""}>${o}</option>`).join("")}</select></label>`;
-  const edServices = () => D.services.map((s, i) => itemShell("services", i, esc(s.title.en || "Service"), `<div class="g3">${sel(`services.${i}.color`, COLS)}${sel(`services.${i}.icon`, ICONS)}</div>${bi(`services.${i}.title`, "Title")}${bi(`services.${i}.desc`, "Short line")}`, D.services.length)).join("") + addBtn("services", "Add service");
+  const edServices = () => `<p class="note">On phones, tiles show 3 per row. Tick "Wide on mobile" for tiles that should sit 2 per row (the video appears right after the last wide pair).</p>` + D.services.map((s, i) => itemShell("services", i, esc(s.title.en || "Service"), `<div class="g3">${sel(`services.${i}.color`, COLS)}${sel(`services.${i}.icon`, ICONS)}<div style="padding-top:22px">${f(`services.${i}.mw`, "Wide on mobile", "check")}</div></div>${bi(`services.${i}.title`, "Title")}${bi(`services.${i}.desc`, "Short line")}`, D.services.length)).join("") + addBtn("services", "Add service");
   const edInd = () => `<h3 class="lbl" style="font-size:15px">Industries</h3>` + D.industries.map((x, i) => itemShell("industries", i, esc(x.t.en || "Industry"), `${bi(`industries.${i}.t`, "Name")}${bi(`industries.${i}.k`, "What we optimize")}`, D.industries.length)).join("") + addBtn("industries", "Add industry") +
     `<h3 class="lbl" style="font-size:15px;margin-top:18px">Method steps</h3>` + D.method.map((x, i) => itemShell("method", i, esc(x.t.en || "Step"), `${bi(`method.${i}.t`, "Step")}${bi(`method.${i}.p`, "Description")}`, D.method.length)).join("") + addBtn("method", "Add step");
   const edReels = () => `<p class="note">Turn reels on or off, reorder them, and give them titles (empty title = "Reel 01" etc.). To add new reels, upload the .mp4 and .jpg to assets/reels in the repo, then add the ID here.</p>` +
@@ -263,6 +287,17 @@
         ${bi("settings.waPopup", "Popup bubble text", 1)}
         <div style="max-width:240px">${f("settings.waDelay", "Popup appears after (seconds)", "number")}</div>
       </div>
+      <div class="item"><div class="item-h"><b>Call booking</b></div>
+        <div class="row" style="gap:18px;margin-bottom:12px">${f("settings.meeting.enabled", "Show “Book a call” option", "check")}</div>
+        ${sel("settings.meeting.defaultMode", ["book", "form"]).replace("<span>defaultMode</span>", "<span>Open first (book = call booking, form = questions)</span>")}
+        <div class="g3">${f("settings.meeting.duration", "Call length (minutes)", "number")}${f("settings.meeting.start", "First slot (HH:MM)")}${f("settings.meeting.end", "Day ends (HH:MM)")}</div>
+        <div class="g3" style="margin-top:10px">${f("settings.meeting.daysAhead", "Days shown", "number")}${f("settings.meeting.noticeHours", "Minimum notice (hours)", "number")}</div>
+        <span class="lbl" style="margin-top:12px">Working days</span>
+        <div class="row" style="gap:12px;margin-bottom:12px" id="wdBox">${["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d, i) => `<label class="tog"><input type="checkbox" data-wd="${i}" ${(D.settings.meeting.workDays || []).includes(i) ? "checked" : ""}> ${d}</label>`).join("")}</div>
+        ${bi("settings.meeting.title", "Booking title")}${bi("settings.meeting.hint", "Booking hint")}
+        ${f("settings.meeting.bookingUrl", "Optional: Calendly / Google booking link (replaces the built-in picker)")}
+        <p class="note">Booked calls appear in Leads (📅 Calls) and on the Overview. Times are Cairo time; a booked slot disappears for other visitors once the Google Sheet is connected.</p>
+      </div>
       <div class="item"><div class="item-h"><b>Links</b></div>${f("settings.instagram", "Instagram URL")}${f("settings.linkedin", "LinkedIn URL")}</div>
       <div class="item"><div class="item-h"><b>Sections on the site</b></div><div class="row" style="gap:18px">${secs.map(s => f(`settings.sections.${s}`, s[0].toUpperCase() + s.slice(1), "check")).join("")}</div></div>
       <div class="item"><div class="item-h"><b>Change password</b></div>
@@ -272,6 +307,9 @@
       <div class="item"><div class="item-h"><b>Backend</b></div><p class="note">${live ? "Connected to Google Sheets. Leads are stored in the sheet and emailed to the owner." : "Demo mode. Leads, stats and edits live in this browser only. Follow SETUP.md (5 minutes, free) to connect Google Sheets so leads from every visitor arrive here and by email."}</p></div>
     </div>`;
     bind($("sBody"), renderSettings);
+    $("wdBox").querySelectorAll("[data-wd]").forEach(c => c.onchange = () => {
+      D.settings.meeting.workDays = [...$("wdBox").querySelectorAll("[data-wd]:checked")].map(x => +x.dataset.wd); markDirty();
+    });
     $("setPw").onclick = async () => {
       const a = $("np1").value, b = $("np2").value;
       if (a.length < 8) return toast("Use at least 8 characters");

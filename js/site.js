@@ -13,7 +13,11 @@
       pick: "Pick one", pickMany: "Pick all that apply", cont: "Continue", back: "← Back",
       cName: "Almost done. Where should Amr reach you?", cHint: "Your details go to Amr only.", fName: "Your name", fPhone: "WhatsApp number", fBrand: "Brand or website (optional)",
       send: "Get my free ad review", sending: "Sending...", errReq: "Please add your name and a valid WhatsApp number.",
-      thanksT: "You're in.", waNow: "Message Amr on WhatsApp now", vtag: "Amr Essam", vtag2: "Media buyer", reel: "Reel", watch: "Watch"
+      thanksT: "You're in.", waNow: "Message Amr on WhatsApp now", vtag: "Amr Essam", vtag2: "Media buyer", reel: "Reel", watch: "Watch",
+      "cta.book": "Book a free call", "cta.review": "Get a free ad review",
+      "mode.book": "Book a call", "mode.bookS": "1 click · 30 min", "mode.form": "Grow with us", "mode.formS": "5 quick questions",
+      today: "Today", tomorrow: "Tomorrow", noSlots: "No free times left this day. Try another day.", yourDetails: "Your details", pickFirst: "Pick a time above, then confirm.",
+      confirm: "Confirm my call", booking: "Booking...", bookedT: "Your call is booked.", bookedP: "See you on WhatsApp,", addCal: "Add to Google Calendar", waConfirm: "Confirm on WhatsApp", min: "min"
     },
     ar: {
       "nav.results": "النتائج", "nav.cases": "دراسات حالة", "nav.reels": "الريلز",
@@ -28,7 +32,12 @@
       pick: "اختار واحدة", pickMany: "اختار كل اللي ينطبق", cont: "كمّل", back: "→ رجوع",
       cName: "خلاص قربنا. عمرو يكلمك فين؟", cHint: "بياناتك بتروح لعمرو بس.", fName: "اسمك", fPhone: "رقم الواتساب", fBrand: "البراند أو الموقع (اختياري)",
       send: "عايز مراجعة مجانية لإعلاناتي", sending: "بيتبعت...", errReq: "من فضلك اكتب اسمك ورقم واتساب صحيح.",
-      thanksT: "وصلنا طلبك.", waNow: "كلّم عمرو على واتساب دلوقتي", vtag: "عمرو عصام", vtag2: "ميديا باير", reel: "ريل", watch: "اتفرج"
+      thanksT: "وصلنا طلبك.", waNow: "كلّم عمرو على واتساب دلوقتي", vtag: "عمرو عصام", vtag2: "ميديا باير", reel: "ريل", watch: "اتفرج",
+      "foot.role": "Senior Performance Marketer · Meta · TikTok · Snapchat · إيميل · SMS",
+      "cta.book": "احجز مكالمة مجانية", "cta.review": "خد مراجعة مجانية لإعلاناتك",
+      "mode.book": "احجز مكالمة", "mode.bookS": "ضغطة واحدة · 30 دقيقة", "mode.form": "اكبر معانا", "mode.formS": "5 أسئلة سريعة",
+      today: "النهارده", tomorrow: "بكرة", noSlots: "مفيش مواعيد فاضية اليوم ده. جرّب يوم تاني.", yourDetails: "بياناتك", pickFirst: "اختار معاد من فوق وبعدين أكّد.",
+      confirm: "أكّد المكالمة", booking: "بيتحجز...", bookedT: "مكالمتك اتحجزت.", bookedP: "عمرو هيكلمك على واتساب يوم", addCal: "ضيفها لـ Google Calendar", waConfirm: "أكّد على واتساب", min: "دقيقة"
     }
   };
   const ICONS = {
@@ -36,9 +45,12 @@
     tiktok: '<svg viewBox="0 0 48 48"><path fill="#25F4EE" d="M20 20.5v-1.6a12 12 0 0 0-1.7-.1 12.5 12.5 0 0 0-7 22.8 12.5 12.5 0 0 1 8.7-21.1z"/><path fill="#FE2C55" d="M20.3 37.6a5.7 5.7 0 0 0 5.7-5.5V5.6h4.9a9.3 9.3 0 0 1-.2-1.6h-6.6v26.6a5.7 5.7 0 0 1-8.3 5 5.7 5.7 0 0 0 4.5 2zM36.6 14.6v-1.5a9.3 9.3 0 0 1-5.1-1.5 9.3 9.3 0 0 0 5.1 3z"/><path fill="#111" d="M31.5 11.6a9.3 9.3 0 0 1-2.3-6H26v26.5a5.7 5.7 0 0 1-10.2 3.5A5.7 5.7 0 0 1 20 25V20.5a12.5 12.5 0 0 0-8.7 21.1 12.5 12.5 0 0 0 19.3-10.5V17.6a16 16 0 0 0 9.4 3v-6a9.4 9.4 0 0 1-8.5-3z"/></svg>',
     target: '<svg viewBox="0 0 48 48" fill="none" stroke="#111" stroke-width="3"><circle cx="24" cy="24" r="18"/><circle cx="24" cy="24" r="10"/><circle cx="24" cy="24" r="3" fill="#111"/></svg>',
     test: '<svg viewBox="0 0 48 48" fill="none" stroke="#111" stroke-width="3" stroke-linecap="round"><path d="M8 38l10-12 8 6 14-18"/><path d="M32 14h8v8"/></svg>',
-    track: '<svg viewBox="0 0 48 48" fill="none" stroke="#111" stroke-width="3" stroke-linecap="round"><rect x="8" y="26" width="7" height="14" rx="2"/><rect x="20.5" y="18" width="7" height="22" rx="2"/><rect x="33" y="9" width="7" height="31" rx="2"/></svg>'
+    track: '<svg viewBox="0 0 48 48" fill="none" stroke="#111" stroke-width="3" stroke-linecap="round"><rect x="8" y="26" width="7" height="14" rx="2"/><rect x="20.5" y="18" width="7" height="22" rx="2"/><rect x="33" y="9" width="7" height="31" rx="2"/></svg>',
+    snap: '<svg viewBox="0 0 48 48"><rect x="2" y="2" width="44" height="44" rx="12" fill="#FFFC00"/><path fill="#fff" stroke="#111" stroke-width="2" stroke-linejoin="round" d="M24 9.5c4.6 0 8.2 3.5 8.2 8.3v4.4c.9.4 2 .1 2.8-.3.9-.4 2 .6 1.2 1.5-.9.9-2.6 1.4-3.6 1.9.6 2.6 3 5.4 6 6.3.7.2.8 1.1.1 1.4-1.4.6-2.9.9-4.1 1.1-.3.6-.3 1.6-.7 2.1-.4.4-1.9 0-3.1.2-1.8.3-3.4 2.5-6.8 2.5s-5-2.2-6.8-2.5c-1.2-.2-2.7.2-3.1-.2-.4-.5-.4-1.5-.7-2.1-1.2-.2-2.7-.5-4.1-1.1-.7-.3-.6-1.2.1-1.4 3-.9 5.4-3.7 6-6.3-1-.5-2.7-1-3.6-1.9-.8-.9.3-1.9 1.2-1.5.8.4 1.9.7 2.8.3v-4.4c0-4.8 3.6-8.3 8.2-8.3z"/></svg>',
+    email: '<svg viewBox="0 0 48 48" fill="none" stroke="#111" stroke-width="3" stroke-linejoin="round"><rect x="6" y="11" width="36" height="26" rx="5" fill="#fff"/><path d="M8 14l16 12 16-12" stroke-linecap="round"/></svg>',
+    sms: '<svg viewBox="0 0 48 48" fill="none" stroke="#111" stroke-width="3" stroke-linejoin="round"><path d="M8 12a4 4 0 0 1 4-4h24a4 4 0 0 1 4 4v16a4 4 0 0 1-4 4H20l-9 7v-7h1a4 4 0 0 1-4-4z" fill="#fff"/><circle cx="17" cy="20" r="1.8" fill="#111" stroke="none"/><circle cx="24" cy="20" r="1.8" fill="#111" stroke="none"/><circle cx="31" cy="20" r="1.8" fill="#111" stroke="none"/></svg>'
   };
-  const COLORS = ["blue", "gray", "mint", "orange", "yellow", "lilac"];
+  const COLORS = ["blue", "gray", "mint", "orange", "yellow", "lilac", "pink"];
 
   const C = await AEStore.getContent();
   let lang = "en";
@@ -65,12 +77,26 @@
   }
 
   function renderBento() {
-    const s = C.services;
-    const tile = (x, cls = "") => `<div class="tile t-${esc(x.color)} ${cls}"><div><h3>${esc(L(x.title))}</h3><p>${esc(L(x.desc))}</p></div><span class="ico">${ICONS[x.icon] || ICONS.track}</span></div>`;
-    const vid = `<div class="tile vid"><video src="assets/hero.mp4" poster="assets/reels/r03.jpg" autoplay muted loop playsinline></video><div class="vtag"><span><b>${T("vtag")}</b><br>${T("vtag2")}</span><span class="pulse"></span></div></div>`;
-    const parts = s.map((x, i) => tile(x, i === 3 && s.length === 5 ? "wide" : ""));
+    const s = C.services, n = s.length;
+    // desktop: 4 columns, video spans 2 rows at column 3; the last tiles stretch to close the final row
+    const cells = n + 2, rem = cells % 4, wideFrom = rem ? n - (4 - rem) : n;
+    // mobile: video sits after the first "mw" (two-per-row) pair
+    let lastMw = -1; s.forEach((x, i) => { if (x.mw) lastMw = i; });
+    const vidOrder = (lastMw > -1 ? lastMw : Math.min(2, n - 1)) * 2 + 1;
+    const tile = (x, i) => `<div class="tile t-${esc(x.color)} ${i >= wideFrom ? "wide" : ""} ${x.mw ? "mw" : ""}" style="--o:${i * 2}"><div class="tx"><h3>${esc(L(x.title))}</h3><p>${esc(L(x.desc))}</p></div><span class="ico">${ICONS[x.icon] || ICONS.track}</span></div>`;
+    const vid = `<div class="tile vid" style="--o:${vidOrder}"><video src="assets/hero.mp4" poster="assets/reels/r03.jpg" autoplay muted loop playsinline></video><div class="vtag"><span><b>${T("vtag")}</b><br>${T("vtag2")}</span><span class="pulse"></span></div></div>`;
+    const parts = s.map(tile);
     parts.splice(Math.min(2, parts.length), 0, vid);
     $("bento").innerHTML = parts.join("");
+  }
+
+  function renderClients() {
+    const cl = C.clients || {}; const items = (cl.items || []).filter(x => x.name || x.logo);
+    if (!items.length) { $("clients").hidden = true; return; }
+    const one = items.map(x => `<div class="cl-item">${x.logo ? `<img src="${esc(x.logo)}" alt="${esc(x.name)}" loading="lazy">` : `<span class="cl-ph">${esc(x.name)}</span>`}</div>`).join("");
+    let reps = 2; while (reps * items.length < 12) reps += 2;
+    $("clTrack").innerHTML = Array(reps).fill(one).join("");
+    $("clTrack").style.setProperty("--dur", Math.max(10, (+cl.speed || 30) * items.length * reps / 16) + "s");
   }
 
   function renderStats() {
@@ -247,8 +273,116 @@
     AEStore.track("submit");
     step = TOTAL; renderStep();
   }
+  /* -------- one-click booking -------- */
+  const M = C.settings.meeting || {};
+  const TZ = "Africa/Cairo";
+  let mode = M.enabled === false ? "form" : (M.defaultMode || "book");
+  let BUSY = [];
+  const bk = { day: null, slot: null, started: false };
+  const pad = n => String(n).padStart(2, "0");
+  const cairoParts = d => Object.fromEntries(new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(d).map(p => [p.type, p.value]));
+  const tzOff = d => { const p = cairoParts(d); return (Date.UTC(+p.year, p.month - 1, +p.day, +p.hour, +p.minute) - Math.floor(d.getTime() / 60000) * 60000) / 60000; };
+  function slotUTC(key) {
+    const [ds, ts] = key.split(" "); const [y, m, d] = ds.split("-").map(Number); const [h, mi] = ts.split(":").map(Number);
+    const naive = Date.UTC(y, m - 1, d, h, mi); return new Date(naive - tzOff(new Date(naive)) * 60000);
+  }
+  const WD = { en: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], ar: ["الأحد", "الاتنين", "التلات", "الأربع", "الخميس", "الجمعة", "السبت"] };
+  const MO = { en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], ar: ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"] };
+  const tLabel = hm => { let [h, m] = hm.split(":").map(Number); const pm = h >= 12; h = h % 12 || 12; return `${h}:${pad(m)} ${lang === "ar" ? (pm ? "م" : "ص") : (pm ? "PM" : "AM")}`; };
+  const dLabel = key => { const [y, m, d] = key.split("-").map(Number); const dow = new Date(Date.UTC(y, m - 1, d)).getUTCDay(); return `${WD[lang][dow]} ${d} ${MO[lang][m - 1]}`; };
+  function bookDays() {
+    const p = cairoParts(new Date()); const out = []; const wd = M.workDays || [0, 1, 2, 3, 4, 6];
+    for (let i = 0; i < 40 && out.length < (+M.daysAhead || 7); i++) {
+      const dt = new Date(Date.UTC(+p.year, p.month - 1, +p.day + i));
+      const key = `${dt.getUTCFullYear()}-${pad(dt.getUTCMonth() + 1)}-${pad(dt.getUTCDate())}`;
+      if (wd.includes(dt.getUTCDay()) && daySlots(key).length) out.push({ key, i, dow: dt.getUTCDay(), d: dt.getUTCDate(), m: dt.getUTCMonth() });
+    }
+    return out;
+  }
+  function daySlots(day) {
+    const dur = +M.duration || 30; const [sh, sm] = (M.start || "11:00").split(":").map(Number); const [eh, em] = (M.end || "20:00").split(":").map(Number);
+    const limit = Date.now() + (+M.noticeHours || 0) * 36e5; const out = [];
+    for (let t = sh * 60 + sm; t + dur <= eh * 60 + em; t += dur) {
+      const key = `${day} ${pad(Math.floor(t / 60))}:${pad(t % 60)}`;
+      if (slotUTC(key).getTime() > limit && !BUSY.includes(key)) out.push(key);
+    }
+    return out;
+  }
+  function renderBook() {
+    if (M.bookingUrl) {
+      swap(`<h3>${esc(L(M.title))}</h3><p class="hint">${esc(L(M.hint))}</p><iframe class="cal-embed" src="${esc(M.bookingUrl)}" title="Booking calendar" loading="lazy"></iframe>`);
+      return;
+    }
+    const days = bookDays();
+    if (!bk.day || !days.find(d => d.key === bk.day)) bk.day = days[0]?.key || null;
+    swap(`
+      <h3>${esc(L(M.title))}</h3><p class="hint">${esc(L(M.hint))} · ${+M.duration || 30} ${T("min")}</p>
+      <div class="days" id="bkDays">${days.map(d => `<button type="button" class="day ${d.key === bk.day ? "sel" : ""}" data-d="${d.key}"><em>${d.i === 0 ? T("today") : d.i === 1 ? T("tomorrow") : WD[lang][d.dow]}</em><b>${d.d}</b><span>${MO[lang][d.m]}</span></button>`).join("")}</div>
+      <div class="slots" id="bkSlots"></div>
+      <form id="bForm" class="bform ${bk.slot ? "open" : ""}" novalidate>
+        <p class="lbl2" id="bkSel">${bk.slot ? "📅 " + dLabel(bk.slot.split(" ")[0]) + " · " + tLabel(bk.slot.split(" ")[1]) : T("pickFirst")}</p>
+        <div class="bf-row">
+          <label class="fld"><span>${T("fName")}</span><input name="name" autocomplete="name" value="${esc(contact.name)}"></label>
+          <label class="fld"><span>${T("fPhone")}</span><div class="phone-row"><input class="cc" name="cc" value="+20" inputmode="tel" aria-label="Country code"><input name="phone" inputmode="tel" autocomplete="tel-national" placeholder="10 1234 5678" value="${esc(contact.phone.replace(/^\+20/, ""))}"></div></label>
+        </div>
+        <p class="err" id="bErr"></p>
+        <button type="submit" class="btn btn-blue full" ${bk.slot ? "" : "disabled"}>${T("confirm")}</button>
+      </form>`, () => {
+      $("bkDays").querySelectorAll(".day").forEach(b => b.onclick = () => { bk.day = b.dataset.d; $("bkDays").querySelectorAll(".day").forEach(x => x.classList.toggle("sel", x === b)); drawSlots(); });
+      $("bForm").onsubmit = bookSubmit;
+      drawSlots();
+    });
+  }
+  function drawSlots() {
+    const list = bk.day ? daySlots(bk.day) : [];
+    $("bkSlots").innerHTML = list.length ? list.map(k => `<button type="button" class="slot ${k === bk.slot ? "sel" : ""}" data-k="${k}">${tLabel(k.split(" ")[1])}</button>`).join("") : `<p class="muted-p">${T("noSlots")}</p>`;
+    $("bkSlots").querySelectorAll(".slot").forEach(b => b.onclick = () => {
+      if (!bk.started) { bk.started = true; AEStore.track("meeting_start"); }
+      bk.slot = b.dataset.k;
+      $("bkSlots").querySelectorAll(".slot").forEach(x => x.classList.toggle("sel", x === b));
+      const f = $("bForm"); f.classList.add("open"); f.querySelector("[type=submit]").disabled = false;
+      $("bkSel").textContent = "📅 " + dLabel(bk.slot.split(" ")[0]) + " · " + tLabel(bk.slot.split(" ")[1]);
+      if (!f.name.value) setTimeout(() => f.name.focus({ preventScroll: true }), 250);
+    });
+  }
+  async function bookSubmit(e) {
+    e.preventDefault();
+    const f = e.target; if (!bk.slot) { $("bErr").textContent = T("pickFirst"); return; }
+    const name = f.name.value.trim(); const digits = f.phone.value.replace(/\D/g, "").replace(/^0+/, ""); const cc = f.cc.value.replace(/\D/g, "") || "20";
+    f.name.classList.toggle("bad", !name); f.phone.classList.toggle("bad", digits.length < 8);
+    if (!name || digits.length < 8) { $("bErr").textContent = T("errReq"); return; }
+    const btn = f.querySelector("[type=submit]"); btn.textContent = T("booking"); btn.disabled = true;
+    Object.assign(contact, { name, phone: "+" + cc + digits });
+    const q = new URLSearchParams(location.search);
+    await AEStore.submitLead({ type: "meeting", meeting: bk.slot, name, phone: contact.phone, brand: "", lang, goal: "Call booked",
+      source: q.get("utm_source") || (document.referrer ? new URL(document.referrer).hostname : "direct"), campaign: q.get("utm_campaign") || "" });
+    AEStore.track("meeting_booked"); BUSY.push(bk.slot);
+    const start = slotUTC(bk.slot), end = new Date(start.getTime() + (+M.duration || 30) * 6e4);
+    const gfmt = d => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+    const when = `${dLabel(bk.slot.split(" ")[0])} · ${tLabel(bk.slot.split(" ")[1])}`;
+    const gcal = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent("Call with Amr Essam")}&dates=${gfmt(start)}/${gfmt(end)}&details=${encodeURIComponent("Free ads call. Amr will call you on WhatsApp: +" + (C.settings.whatsapp || ""))}`;
+    const waTxt = L({ en: `Hi Amr, I just booked a call for ${when} (Cairo time). My name is ${name}.`, ar: `أهلًا عمرو، لسه حاجز مكالمة يوم ${when} (بتوقيت القاهرة). اسمي ${name}.` });
+    const bookedSlot = bk.slot; bk.slot = null;
+    swap(`<div class="thanks"><div class="ok"><svg viewBox="0 0 40 40"><path d="M9 21l7 7 15-16"/></svg></div><h3>${T("bookedT")}</h3><p>${T("bookedP")} <b>${esc(when)}</b></p>
+      <div class="ty-btns"><a class="btn btn-wa" target="_blank" rel="noopener" href="${waLink(waTxt)}" id="bkWa">${T("waConfirm")} →</a><a class="btn btn-ghost" target="_blank" rel="noopener" href="${gcal}">📅 ${T("addCal")}</a></div></div>`, () => {
+      $("bkWa").onclick = () => AEStore.track("wa_click_thanks");
+    });
+    $("lfBar").style.transform = "scaleX(1)"; $("lfCount").textContent = "✓";
+    return bookedSlot;
+  }
+  function renderLead() {
+    const on = M.enabled !== false;
+    $("modes").hidden = !on; if (!on) mode = "form";
+    $("modes").querySelectorAll("button").forEach(b => { b.classList.toggle("on", b.dataset.m === mode); b.setAttribute("aria-selected", b.dataset.m === mode); });
+    $("lf").classList.toggle("is-book", mode === "book");
+    if (mode === "book") renderBook(); else renderStep();
+  }
+  function setMode(m) { if (m === mode && $("lfStage").firstElementChild) return; mode = m; $("lfStage").innerHTML = ""; AEStore.track("mode_" + m); renderLead(); }
+  $("modes").querySelectorAll("button").forEach(b => b.onclick = () => setMode(b.dataset.m));
+  document.querySelectorAll("[data-goto]").forEach(a => a.addEventListener("click", () => setMode(a.dataset.goto)));
+
   document.addEventListener("keydown", e => {
-    if (step >= S.length || e.target.matches("input,textarea") || e.metaKey || e.ctrlKey) return;
+    if (mode !== "form" || step >= S.length || e.target.matches("input,textarea") || e.metaKey || e.ctrlKey) return;
     const r = $("lf").getBoundingClientRect(); if (r.top > innerHeight || r.bottom < 0) return;
     const i = e.key.toUpperCase().charCodeAt(0) - 65;
     const opts = $("lfStage").querySelectorAll(".opt");
@@ -279,8 +413,9 @@
   const reveal = () => document.querySelectorAll(".rv:not(.in)").forEach(el => io.observe(el));
 
   function renderAll() {
-    renderStatic(); renderBento(); renderStats(); renderCampaign(); renderCases(); renderInd(); renderReels(); renderStep(); initWa(); reveal();
+    renderStatic(); renderBento(); renderClients(); renderStats(); renderCampaign(); renderCases(); renderInd(); renderReels(); $("lfStage").innerHTML = ""; renderLead(); initWa(); reveal();
   }
+  try { BUSY = await AEStore.busy(); } catch (e) { BUSY = []; }
   $("lang").onclick = () => { lang = lang === "ar" ? "en" : "ar"; try { localStorage.setItem("ae2-lang", lang); } catch (e) {} renderAll(); };
 
   try { if (!sessionStorage.getItem("ae2-v")) { sessionStorage.setItem("ae2-v", "1"); AEStore.track("visit"); } } catch (e) { AEStore.track("visit"); }

@@ -50,6 +50,11 @@
       const ev = LS.get("ae2-events", {}); const d = today();
       ev[d] = ev[d] || {}; ev[d][name] = (ev[d][name] || 0) + 1; LS.set("ae2-events", ev);
     },
+    /* booked meeting slots ("YYYY-MM-DD HH:MM", Cairo time), no personal data */
+    async busy() {
+      if (B()) { try { const r = await fetch(B() + "?a=busy"); const j = await r.json(); return j.ok ? (j.busy || []) : []; } catch (e) { return []; } }
+      return LS.get("ae2-leads", []).filter(l => l.meeting && l.status !== "Lost").map(l => l.meeting);
+    },
     /* ---------- admin ---------- */
     async login(pw) {
       if (B()) { await post({ a: "login", pw }); return true; }

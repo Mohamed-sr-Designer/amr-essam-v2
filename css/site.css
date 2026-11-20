@@ -283,3 +283,86 @@ html[dir="rtl"] .wa{right:auto;left:22px;align-items:flex-start}
   html[dir="rtl"] .wa{left:16px}
   .wa-pop{width:min(300px,calc(100vw - 32px))}
 }
+
+/* ===== v2.1 additions ===== */
+:root{--c-pink:#FFB8D9}
+.t-pink{background:var(--c-pink)}
+.hero-ctas{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:-8px 0 40px}
+.h2.sm{font-size:clamp(22px,2.4vw,30px);color:var(--mute)}
+
+/* client logos marquee */
+.clients{padding-top:80px;overflow:hidden;position:relative;z-index:1}
+.cl-track-wrap{margin-top:28px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);direction:ltr}
+.cl-track{display:flex;width:max-content;animation:clmove var(--dur,40s) linear infinite}
+.cl-track:hover{animation-play-state:paused}
+@keyframes clmove{to{transform:translateX(-50%)}}
+.cl-item{flex:none;width:200px;height:90px;display:grid;place-items:center;padding:0 22px}
+.cl-item img{max-width:150px;max-height:56px;object-fit:contain;filter:grayscale(1);opacity:.75;transition:filter .3s,opacity .3s}
+.cl-item:hover img{filter:none;opacity:1}
+.cl-ph{font-family:"Chillax",sans-serif;font-weight:700;font-size:24px;letter-spacing:.02em;color:#B9B7AE;border:2px dashed #D3D1C8;border-radius:14px;padding:12px 18px;white-space:nowrap}
+
+/* contact modes */
+.modes{display:flex;gap:10px;justify-content:center;margin:32px auto 0;max-width:720px}
+.modes[hidden]{display:none}
+.modes button{flex:1;display:flex;align-items:center;gap:12px;text-align:start;background:var(--card);border-radius:20px;padding:14px 18px;box-shadow:0 0 0 1.5px var(--line);transition:box-shadow .2s,background .2s,transform .2s}
+.modes button:hover{transform:translateY(-2px)}
+.modes button.on{box-shadow:0 0 0 2px var(--blue);background:#EEF3FF}
+.modes .m-ico{width:42px;height:42px;border-radius:12px;background:var(--paper);display:grid;place-items:center;font-size:20px;flex:none}
+.modes button.on .m-ico{background:var(--blue)}
+.modes b{display:block;font-size:15px}
+.modes em{font-style:normal;font-size:12.5px;color:var(--mute)}
+.modes + .lf{margin-top:14px}
+.lf.is-book .lf-top{display:none}
+
+/* booking */
+.days{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 10px;scrollbar-width:none;margin-top:4px}
+.days::-webkit-scrollbar{display:none}
+.day{flex:none;width:76px;padding:10px 6px;border-radius:16px;box-shadow:inset 0 0 0 1.5px var(--line);display:flex;flex-direction:column;align-items:center;gap:1px;transition:box-shadow .2s,background .2s}
+.day em{font-style:normal;font-size:11.5px;color:var(--mute);font-weight:500}
+.day b{font-size:22px;line-height:1.2;font-family:"Poppins",sans-serif}
+.day span{font-size:11.5px;color:var(--mute)}
+.day:hover{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.day.sel{background:var(--ink);color:#fff;box-shadow:none}
+.day.sel em,.day.sel span{color:#C9C9C4}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px;margin:12px 0 18px;min-height:52px}
+.slot{padding:13px 8px;border-radius:14px;box-shadow:inset 0 0 0 1.5px var(--line);font-weight:600;font-size:14px;direction:ltr;transition:box-shadow .2s,background .2s,transform .15s}
+.slot:hover{box-shadow:inset 0 0 0 1.5px var(--blue);color:var(--blue)}
+.slot:active{transform:scale(.97)}
+.slot.sel{background:var(--blue);color:#fff;box-shadow:none}
+.muted-p{color:var(--mute);font-size:14px;grid-column:1/-1;padding:10px 0}
+.bform{border-top:1px solid var(--line);padding-top:16px;opacity:.45;pointer-events:none;transition:opacity .3s}
+.bform.open{opacity:1;pointer-events:auto}
+.lbl2{font-weight:600;font-size:14.5px;margin-bottom:12px}
+.bf-row{display:grid;grid-template-columns:1fr 1.2fr;gap:12px}
+.btn.full{width:100%}
+.btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+.cal-embed{width:100%;height:640px;border:0;border-radius:18px;background:#fff}
+.ty-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+/* mobile bento, Flagpole style: 3 small tiles per row, pairs for "mw" tiles */
+@media (max-width:620px){
+  .hero-ctas .btn{flex:1 1 100%}
+  .bento{grid-template-columns:repeat(6,1fr);grid-auto-rows:auto;gap:10px}
+  .tile{grid-column:span 2;order:var(--o);flex-direction:column;justify-content:space-between;align-items:center;text-align:center;padding:18px 10px 16px;min-height:200px;border-radius:16px;gap:16px}
+  .tile:hover{transform:none}
+  .tile .tx{display:flex;flex-direction:column;align-items:center}
+  .tile h3{font-family:var(--f-b);font-weight:500;font-size:14px;line-height:1.3}
+  .tile p{display:none}
+  .tile .ico{width:64px;height:64px;background:transparent}
+  .tile .ico svg{width:58px;height:58px}
+  .tile.wide{grid-column:span 2}
+  .tile.mw{grid-column:span 3;min-height:250px}
+  .tile.mw .ico{width:96px;height:96px}
+  .tile.mw .ico svg{width:84px;height:84px}
+  .tile.mw p{display:block;font-size:12px;margin-top:4px}
+  .tile.vid{grid-column:span 6;aspect-ratio:4/5;min-height:0;padding:0;order:var(--o)}
+  .modes{flex-direction:column}
+  .bf-row{grid-template-columns:1fr}
+  .cl-item{width:150px;height:72px;padding:0 14px}
+  .cl-ph{font-size:18px;padding:9px 13px}
+  .clients{padding-top:60px}
+}
+@media (prefers-reduced-motion:reduce){.cl-track{animation:none;flex-wrap:wrap;width:auto;justify-content:center}}
+.logo-txt{white-space:nowrap}
+@media (max-width:620px){.nav{padding:7px 7px 7px 14px;gap:8px}html[dir="rtl"] .nav{padding:7px 14px 7px 7px}.logo-txt{font-size:15px}.nav .btn-sm{padding:9px 14px;font-size:13px}.lang{padding:8px 11px}}
+@media (max-width:360px){.logo-txt{display:none}}
